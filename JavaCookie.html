@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Activity Tracker</title>
+</head>
+<body>
+    <h1>User Activity Tracker</h1>
+    <p id="activity-info">Loading...</p>
+
+    <script>
+        // Function to retrieve cookie value by name
+        function getCookie(name) {
+            let cookieArr = document.cookie.split("; ");
+            for (let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].split("=");
+                if (name === cookiePair[0]) {
+                    return cookiePair[1];
+                }
+            }
+            return null;
+        }
+
+        // Retrieve the cookies
+        let lastVisitedPage = getCookie('last_visited_page');
+        let lastVisitedTimeInSeconds = getCookie('last_visited_time_in_seconds');
+
+        // Display the information if cookies exist
+        if (lastVisitedPage && lastVisitedTimeInSeconds) {
+            let currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+            let timeDifference = currentTime - lastVisitedTimeInSeconds; // Time difference in seconds
+            document.getElementById("activity-info").innerHTML = 
+                `Last visited page: ${lastVisitedPage} <br> Last visit was ${timeDifference} seconds ago.`;
+        } else {
+            document.getElementById("activity-info").innerHTML = "No previous activity found.";
+        }
+    </script>
+</body>
+</html>
